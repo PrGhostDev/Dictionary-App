@@ -22,15 +22,16 @@ const WordDetailsPage = ({ selectedHistory }) => {
   const renderPhonetics = (phonetics) => {
     return (
       <div className="phonetics-container">
-        {phonetics.map((phonetic, index) => (
-          <div key={index}>
-            <p>Phonetic: {phonetic.text}</p>
-            <audio key={phonetic.audio} controls>
-              <source src={phonetic.audio} type="audio/mpeg" />
-              Your browser does not support the audio element.
-            </audio>
-          </div>
-        ))}
+        {phonetics &&
+          phonetics.map((phonetic, index) => (
+            <div key={index}>
+              <p>Phonetic: {phonetic.text}</p>
+              <audio key={phonetic.audio} controls>
+                <source src={phonetic.audio} type="audio/mpeg" />
+                Your browser does not support the audio element.
+              </audio>
+            </div>
+          ))}
       </div>
     );
   };
@@ -38,26 +39,29 @@ const WordDetailsPage = ({ selectedHistory }) => {
   const renderMeanings = (meanings) => {
     return (
       <div className="meanings-container">
-        {meanings.map((meaning, index) => (
-          <div key={index}>
-            <h4>{meaning.partOfSpeech}</h4>
-            {meaning.definitions.map((definition, subIndex) => (
-              <div key={subIndex}>
-                <p>{definition.definition}</p>
-                {definition.synonyms.length > 0 && (
-                  <p className="synonyms-antonyms">
-                    Synonyms: {definition.synonyms.join(", ")}
-                  </p>
-                )}
-                {definition.antonyms.length > 0 && (
-                  <p className="synonyms-antonyms">
-                    Antonyms: {definition.antonyms.join(", ")}
-                  </p>
-                )}
-              </div>
-            ))}
-          </div>
-        ))}
+        {meanings &&
+          meanings.map((meaning, index) => (
+            <div key={index}>
+              <h4>{meaning.partOfSpeech}</h4>
+              <ul>
+                {meaning.definitions.map((definition, subIndex) => (
+                  <li key={subIndex}>
+                    {definition.definition}
+                    {definition.synonyms.length > 0 && (
+                      <p className="synonyms-antonyms">
+                        Synonyms: {definition.synonyms.join(", ")}
+                      </p>
+                    )}
+                    {definition.antonyms.length > 0 && (
+                      <p className="synonyms-antonyms">
+                        Antonyms: {definition.antonyms.join(", ")}
+                      </p>
+                    )}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
       </div>
     );
   };
@@ -65,13 +69,17 @@ const WordDetailsPage = ({ selectedHistory }) => {
   return (
     <div className="word-details-page">
       <h2>Word Details</h2>
-      {isLoading && <p className="loading">Loading...</p>}
+      {isLoading && <div className="loading" />}
       {error && <p className="error">Error: {error}</p>}
       {wordDetails && wordDetails.length > 0 && (
-        <div className="word-container">
-          <h3>{wordDetails[0]?.word}</h3>
-          {renderPhonetics(wordDetails[0]?.phonetics)}
-          {renderMeanings(wordDetails[0]?.meanings)}
+        <div>
+          {wordDetails.map((details, index) => (
+            <div key={index} className="word-container">
+              <h3>{details.word}</h3>
+              {renderPhonetics(details.phonetics)}
+              {renderMeanings(details.meanings)}
+            </div>
+          ))}
         </div>
       )}
     </div>
