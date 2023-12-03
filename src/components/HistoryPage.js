@@ -1,9 +1,8 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
-import { setSelectedHistory } from '../actions/dictionaryActions';
-import './nav.css';
-import WordDetailsPage from './WordDetailsPage';
+import React from "react";
+import { Link } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { setSelectedHistory } from "../actions/dictionaryActions";
+import WordDetailsPage from "./WordDetailsPage";
 
 const HistoryPage = () => {
   const dispatch = useDispatch();
@@ -26,7 +25,6 @@ const HistoryPage = () => {
         ))}
       </ul>
 
-      {/* Pass selectedHistory as a prop to WordDetailsPage */}
       {selectedHistory && <WordDetailsPage selectedHistory={selectedHistory} />}
     </div>
   );

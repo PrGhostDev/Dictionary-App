@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { searchWord, addToHistory } from "../actions/dictionaryActions";
 import { Link } from "react-router-dom";
-import WordDetailsPage from "./WordDetailsPage";
 
 const HomePage = () => {
   const dispatch = useDispatch();
